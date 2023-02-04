@@ -11,23 +11,32 @@ namespace FilmesAPI.Controllers
         private static int _id = 1;
 
         [HttpPost]
-        public void AdicionarFilme([FromBody]Filme filme)
+        public IActionResult AdicionarFilme([FromBody]Filme filme)
         {
             filme.Id = _id++;
             filmes.Add(filme);
-            Console.WriteLine(filme.Titulo);
+
+            // Boas práticas para indicar a localização do recurso criado
+            return CreatedAtAction(nameof(RecuperarFilmesPorId), new { Id = filme.Id }, filme);
         }
 
         [HttpGet]
-        public IEnumerable<Filme> RecuperarFilmes()
+        public IActionResult RecuperarFilmes()
         {
-            return filmes;
+            return Ok(filmes);
         }
 
         [HttpGet("{id}")]
-        public Filme RecuperarFilmesPorId(int id)
+        public IActionResult RecuperarFilmesPorId(int id)
         {
-            return filmes.FirstOrDefault(filme => filme.Id == id);
+            var filme = filmes.FirstOrDefault(filme => filme.Id == id);
+            
+            if (filme != null)
+            {
+                return Ok(filme);
+            }
+
+            return NotFound();
         }
     }
 }
