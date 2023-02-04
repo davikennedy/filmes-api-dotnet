@@ -34,12 +34,9 @@ namespace FilmesAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult RecuperarFilmesPorId(int id)
         {
-            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);            
             
-            if (filme != null)
-            {
-                return Ok(filme);
-            }
+            if (filme != null) return Ok(filme);
 
             return NotFound();
         }
@@ -49,16 +46,25 @@ namespace FilmesAPI.Controllers
         {
             var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
 
-            if (filme == null)
-            {
-                return NotFound();
-            }
+            if (filme == null) return NotFound();
 
             filme.Titulo = filmeNovo.Titulo;
             filme.Diretor = filmeNovo.Diretor;
             filme.Genero = filmeNovo.Genero;
             filme.Duracao = filmeNovo.Duracao;
 
+            _context.SaveChanges();
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult RemoverFilme(int id)
+        {
+            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+
+            if (filme == null) return NotFound();
+
+            _context.Remove(filme);
             _context.SaveChanges();
             return NoContent();
         }
