@@ -40,7 +40,7 @@ namespace FilmesAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult RecuperarFilmesPorId(int id)
         {
-            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);            
+            var filme = _context.Filmes.Find(id);            
             
             if (filme != null)
             {
@@ -54,7 +54,7 @@ namespace FilmesAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult AtualizarFilme(int id, [FromBody] UpdateFilmeDto filmeDto)
         {
-            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            var filme = _context.Filmes.Find(id);
 
             if (filme == null) return NotFound();
 
@@ -66,7 +66,7 @@ namespace FilmesAPI.Controllers
         [HttpPatch("{id}")]
         public IActionResult AtualizarFilmeParcial(int id, JsonPatchDocument<UpdateFilmeDto> patch)
         {
-            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            var filme = _context.Filmes.Find(id);
             if (filme == null) return NotFound();
 
             var filmeParaAtualizar = _mapper.Map<UpdateFilmeDto>(filme);            
@@ -82,7 +82,7 @@ namespace FilmesAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult RemoverFilme(int id)
         {
-            var filme = _context.Filmes.FirstOrDefault(filme => filme.Id == id);
+            var filme = _context.Filmes.Find(id);
 
             if (filme == null) return NotFound();
 
