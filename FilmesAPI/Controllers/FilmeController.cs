@@ -31,10 +31,11 @@ namespace FilmesAPI.Controllers
             return CreatedAtAction(nameof(RecuperarFilmesPorId), new { Id = filme.Id }, filme);
         }
 
-        [HttpGet]
-        public IEnumerable<Filme> RecuperarFilmes()
+        [HttpGet()]
+        public IEnumerable<Filme> RecuperarFilmes([FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
-            return _context.Filmes;
+            //filme?skip=0&take=10
+            return _context.Filmes.Skip(skip).Take(take);
         }
 
         [HttpGet("{id}")]
