@@ -35,18 +35,18 @@ namespace CinemasAPI.Controllers
             _context.SaveChanges();
 
             // Boas práticas para indicar a localização do recurso criado
-            return CreatedAtAction(nameof(RecuperarCinemasPorId), new { Id = endereco.Id }, endereco);
+            return CreatedAtAction(nameof(RecuperarEnderecosPorId), new { Id = endereco.Id }, endereco);
         }
 
         [HttpGet()]
-        public IEnumerable<Cinema> RecuperarCinemas([FromQuery] int skip = 0, [FromQuery] int take = 10)
+        public IEnumerable<Endereco> RecuperarEnderecos([FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
-            //Cinema?skip=0&take=10
+            //Endereco?skip=0&take=10
             return _context.Enderecos.Skip(skip).Take(take);
         }
 
         [HttpGet("{id}")]
-        public IActionResult RecuperarCinemasPorId(int id)
+        public IActionResult RecuperarEnderecosPorId(int id)
         {
             var endereco = _context.Enderecos.Find(id);
 
