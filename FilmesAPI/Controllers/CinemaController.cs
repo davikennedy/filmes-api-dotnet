@@ -38,11 +38,18 @@ namespace CinemasAPI.Controllers
             return CreatedAtAction(nameof(RecuperarCinemasPorId), new { Id = cinema.Id }, cinema);
         }
 
-        [HttpGet()]
+        /*[HttpGet()]
         public IEnumerable<Cinema> RecuperarCinemas([FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
             //Cinema?skip=0&take=10
             return _context.Cinemas.Skip(skip).Take(take);
+        }*/
+
+        [HttpGet()]
+        public IEnumerable<ReadCinemaDto> RecuperarCinemas()
+        {
+            var listaDeCinemas = _mapper.Map<List<ReadCinemaDto>>(_context.Cinemas.ToList());
+            return listaDeCinemas;
         }
 
         [HttpGet("{id}")]
