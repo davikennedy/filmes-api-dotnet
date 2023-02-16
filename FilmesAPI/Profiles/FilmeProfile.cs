@@ -9,7 +9,9 @@ namespace FilmesAPI.Profiles
         public FilmeProfile() 
         {
             CreateMap<CreateFilmeDto, Filme>();
-            CreateMap<Filme, ReadFilmeDto>();
+            CreateMap<Filme, ReadFilmeDto>()
+                .ForMember(filmeDto => filmeDto.Sessoes,
+                opt => opt.MapFrom(filme => filme.Sessoes)); ;
             CreateMap<UpdateFilmeDto, Filme>();
             CreateMap<Filme, UpdateFilmeDto>();
         }
